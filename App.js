@@ -1,38 +1,37 @@
-import { StatusBar as ExpoStatusBar} from 'expo-status-bar';
-import { StatusBar, StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
+import "react-native-gesture-handler";
+import React from "react";
 
-const isAndroid = Platform.OS === 'android';
-const isIos = Platform.OS === 'ios';
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./src/infrastructure/theme";
+import { useFonts as useOswald, Oswald_400Regular } from "@expo-google-fonts/oswald";
+import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+import { RestaurantsContextProvider } from "./src/services/restaurants/restaurants.context";
+import { LocationContextPovider } from "./src/services/location/location.context";
+import { Navigation } from "./src/infrastructure/navigation";
 
 export default function App() {
+  const [oswaldLoaded] = useOswald({
+    Oswald_400Regular,
+  });
+  const [latoLoaded] = useLato({
+    Lato_400Regular,
+  });
+
+  if (!oswaldLoaded || !latoLoaded) {
+    return null;
+  }
+
   return (
     <>
-    <SafeAreaView style={styles.container}>
-      <View style={styles.search}>
-        <Text>Search</Text>
-      </View>
-      <View style={styles.list}>
-        <Text>List</Text>
-      </View>
-    </SafeAreaView>
-      <ExpoStatusBar style='auto'/>
+      <ThemeProvider theme={theme}>
+        <LocationContextPovider>
+          <RestaurantsContextProvider>
+            <Navigation />
+          </RestaurantsContextProvider>
+        </LocationContextPovider>
+      </ThemeProvider>
+      <ExpoStatusBar style="auto" />
     </>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight,  // android only
-    
-  },
-  search: {
-    backgroundColor: 'green',
-    padding: 16
-  },
-  list: {
-    flex: 1,
-    backgroundColor: 'blue',
-    padding: 16,
-  },
-});
+};
