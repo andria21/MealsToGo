@@ -8,6 +8,8 @@ import open from "../../../../assets/open.js";
 import { Spacer } from "../../../components/spacer/spacer.component.js";
 import { Text } from "../../../components/typography/text.component.js";
 
+import { Favourite } from "../../../components/favourites/favourite.component.js";
+
 import {
   RestaurantCard,
   RestaurantCardCover,
@@ -38,6 +40,7 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
 
   return (
     <RestaurantCard elevation={5}>
+      <Favourite restaurant={restaurant} />
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
       <Info>
         <Text variant="label">{name}</Text>
