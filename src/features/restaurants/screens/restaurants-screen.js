@@ -17,6 +17,7 @@ import { Search } from "../components/search.component";
 import { FavouritesContext } from "../../../services/favourites/favourites.context";
 import { FavouritesBar } from "../../../components/favourites/favourites-bar.component";
 
+import { FadeInView } from "../../../components/animations/fade.animation";
 
 const RestaurantList = styled(FlatList).attrs({
   contentContainerStyle: {
@@ -62,7 +63,9 @@ export const RestaurantsScreen = ({ navigation }) => {
                   })
                 }
               >
+                <FadeInView>
                 <RestaurantInfoCard restaurant={item} />
+                </FadeInView>
               </TouchableOpacity>
             )}}
           keyExtractor={(item) => item.name}
